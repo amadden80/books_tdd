@@ -25,4 +25,25 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'rspec-rails'
+
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy' #should open browser with feature tests, but is acting strange in recent versions
+  gem 'guard-rspec' #automatically runs events
+  gem 'rb-fsevent'
+
+
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
