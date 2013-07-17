@@ -31,29 +31,45 @@ describe 'Authors' do
         page.should have_selector('input#author_bio[type=text]')
       end
     end
+    context 'form filling' do
 
-    it 'can create a new author via the form' do
-      author = FactoryGirl.build(:author)
+      context 'valid attributes' do
+        let(:author){FactoryGirl.build(:author)}
 
-      expect {
-        within('form#new_author') do
-          fill_in 'First name', with: author.first_name
-          fill_in 'Last name', with: author.last_name
-          fill_in 'Age', with: author.age
-          fill_in 'Bio', with: author.bio
-          click_button 'Create Author'
+        it 'can create a new author via the form' do
+          expect {
+            within('form#new_author') do
+              fill_in 'First name', with: author.first_name
+              fill_in 'Last name', with: author.last_name
+              fill_in 'Age', with: author.age
+              fill_in 'Bio', with: author.bio
+              click_button 'Create Author'
+            end
+          }.to change{ Author.count}.by 1
         end
-      }.to change{ Author.count}.by 1
-    end
 
-    it 'redirects to the author show page on correctly submitting form' do
-      pending
-    end
-    it 'should flash an error if an author is not created' do
-      pending
-    end
-    it 'should redirect back to the new page if an author is not created' do
-      pending
+        it 'redirects to the author show page on correctly submitting form' do
+          within('form#new_author') do
+            fill_in 'First name', with: author.first_name
+            fill_in 'Last name', with: author.last_name
+            fill_in 'Age', with: author.age
+            fill_in 'Bio', with: author.bio
+            click_button 'Create Author'
+
+            #this test is not robust enough. too dependent on db structure.
+            current_path.should eq author_path(Author.first)
+          end
+        end
+      end
+      context 'invalid attributes' do
+
+        it 'should flash an error if an author is not created' do
+          pending
+        end
+        it 'should redirect back to the new page if an author is not created' do
+          pending
+        end
+      end
     end
 
 
