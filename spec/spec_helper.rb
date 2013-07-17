@@ -12,6 +12,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
 
+  #configures the database to be cleaned efficiently after every suite of tests
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
   end
