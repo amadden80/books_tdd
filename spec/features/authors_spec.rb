@@ -31,6 +31,10 @@ describe 'Authors' do
         page.should have_selector('input#author_bio[type=text]')
       end
     end
+    it 'does not have an error message flashed by default' do
+      page.should_not have_selector('h4.error')
+    end
+
     context 'form filling' do
 
       context 'valid attributes' do
@@ -55,20 +59,31 @@ describe 'Authors' do
             fill_in 'Age', with: author.age
             fill_in 'Bio', with: author.bio
             click_button 'Create Author'
-
-            #this test is not robust enough. too dependent on db structure.
-            current_path.should eq author_path(Author.first)
           end
+          #this test is not robust enough. too dependent on db structure.
+          current_path.should eq author_path(Author.first)
         end
       end
-      context 'invalid attributes' do
 
-        it 'should flash an error if an author is not created' do
-          pending
+      context 'invalid attributes' do
+        before do
+          author = FactoryGirl.build(:invalid_author)
+          within('form#new_author') do
+            fill_in 'First name', with: author.first_name
+            fill_in 'Last name', with: author.last_name
+            fill_in 'Age', with: author.age
+            fill_in 'Bio', with: author.bio
+            click_button 'Create Author'
+          end
         end
+
         it 'should redirect back to the new page if an author is not created' do
-          pending
+          current_path.should eq new_author_path
         end
+        it 'should flash an error if an author is not created' do
+          find('h4.error').should have_content('There was an error creating the Author')
+        end
+
       end
     end
 

@@ -9,8 +9,9 @@ class AuthorsController < ApplicationController
       redirect_to @author
       # redirect_to author_path(@author)
     else
+      flash[:error] = 'There was an error creating the Author'
       redirect_to new_author_path
-    end
+     end
   end
 
   def show

@@ -21,6 +21,12 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-debugger'
   gem 'pry-stack_explorer'
+
+  #RailsPanel gems
+  gem 'binding_of_caller'
+  gem 'meta_request'
+
+  gem 'quiet_assets'
 end
 
 group :test do

@@ -20,4 +20,11 @@ FactoryGirl.define do
     age            35
   end
 
+  factory :invalid_author, class: Author do
+    first_name nil
+    last_name 434
+    bio 1239470
+    age 'Hello'
+  end
+
 end
